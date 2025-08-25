@@ -16,12 +16,29 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         // Step 1: Input number of processes
-        System.out.print("Enter the no. of process: ");
-        int n = sc.nextInt();
+        int n;
+        while (true) {
+            System.out.print("Enter the no. of process (3-10): ");
+            String input = sc.next();
 
-        while (n < 3 || n > 10) {
-            System.out.println("Invalid input. Please enter between 3 and 10.");
-            n = sc.nextInt();
+            boolean isNumeric = true;
+            for (char c : input.toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    isNumeric = false;
+                    break;
+                }
+            }
+
+            if (isNumeric) {
+                n = Integer.parseInt(input);
+                if (n >= 3 && n <= 10) {
+                    break;
+                } else {
+                    System.out.println("Invalid input. Please enter a number between 3 and 10.");
+                }
+            } else {
+                System.out.println("Invalid input. Only positive integers are allowed.");
+            }
         }
 
         // Step 2: Input Process IDs
@@ -33,9 +50,28 @@ public class Main {
         }
 
         // Step 3: Input Waiting Times
+        java.util.Set<Integer> usedWaitingTimes = new java.util.HashSet<>();
         for (int i = 0; i < n; i++) {
-            System.out.print("Enter waiting time for " + processes[i].processID + ": ");
-            processes[i].waitingTime = sc.nextInt();
+            while (true) {
+                System.out.print("Enter waiting time for " + processes[i].processID + ": ");
+
+                if (sc.hasNextInt()) {
+                    int wt = sc.nextInt();
+
+                    if (wt < 0) {
+                        System.out.println("Invalid input. Waiting time must be 0 or greater.");
+                    } else if (usedWaitingTimes.contains(wt)) {
+                        System.out.println("Invalid input. Waiting time must not be repeated.");
+                    } else {
+                        processes[i].waitingTime = wt;
+                        usedWaitingTimes.add(wt);
+                        break; // ✅ valid input, exit loop
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid integer.");
+                    sc.next(); // discard invalid token
+                }
+            }
         }
 
         // Step 4: Input Burst Times
