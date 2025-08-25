@@ -1,4 +1,6 @@
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 class Process {
     String processID;
@@ -43,10 +45,23 @@ public class Main {
 
         // Step 2: Input Process IDs
         Process[] processes = new Process[n];
+        Set<String> usedProcessIDs = new HashSet<>();
+
         for (int i = 0; i < n; i++) {
-            System.out.print("Enter process ID for Process" + (i + 1) + ": ");
-            String pid = sc.next();
-            processes[i] = new Process(pid);
+            while (true) {
+                System.out.print("Enter process ID for Process" + (i + 1) + ": ");
+                String pid = sc.next().trim();
+
+                if (pid.isEmpty()) {
+                    System.out.println("Invalid input. Process ID cannot be empty.");
+                } else if (usedProcessIDs.contains(pid)){
+                    System.out.println("Invalid input. Process ID must be unique.");
+                } else {
+                    processes[i] = new Process(pid);
+                    usedProcessIDs.add(pid);
+                    break;
+                }
+            }
         }
 
         // Step 3: Input Waiting Times
