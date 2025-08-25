@@ -76,8 +76,23 @@ public class Main {
 
         // Step 4: Input Burst Times
         for (int i = 0; i < n; i++) {
-            System.out.print("Enter burst time for " + processes[i].processID + ": ");
-            processes[i].burstTime = sc.nextInt();
+            while (true) {
+                System.out.print("Enter burst time for " + processes[i].processID + ": ");
+
+                if (sc.hasNextInt()) {
+                    int bt = sc.nextInt();
+
+                    if (bt <= 0) {
+                        System.out.println("Invalid input. Burst time must be a positive integer.");
+                    } else {
+                        processes[i].burstTime = bt;
+                        break;
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid integer.");
+                    sc.next();
+                }
+            }
         }
 
         // Step 5: Compute Turnaround Times
