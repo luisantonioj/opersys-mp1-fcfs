@@ -132,8 +132,8 @@ public class Main {
             }
 
             // Step 7: Display Averages
-            System.out.println("\nAverage arrival time: " + (float) totalWT / n);
-            System.out.println("Average turn-around time: " + (float) totalTAT / n);
+            System.out.println("\nAverage arrival time: %.1f" + (float) totalWT / n);
+            System.out.println("Average turn-around time: %.1f" + (float) totalTAT / n);
 
             // Step 8: Ask user if they want another set
             System.out.print("\nDo you want to enter a new set of processes? (y/n): ");
