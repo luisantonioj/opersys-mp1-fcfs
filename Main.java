@@ -1,6 +1,7 @@
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Arrays;
 
 class Process {
     String processID;
@@ -108,7 +109,7 @@ public class Main {
             int totalWT = 0, totalTAT = 0;
             int currentTime = 0;
 
-            java.util.Arrays.sort(processes, (a, b) -> a.arrivalTime - b.arrivalTime);
+            Arrays.sort(processes, (a, b) -> a.arrivalTime - b.arrivalTime);
 
             for (Process p : processes) {
                 int startTime = Math.max(currentTime, p.arrivalTime);
@@ -123,10 +124,15 @@ public class Main {
                 currentTime = completionTime;
             }
 
-            // Step 6: Display Process Table
+            // Step 6: Display Process Table (sorted by PID)
             System.out.printf("\n%-10s %-15s %-15s %-15s\n",
                     "Process", "Arrival Time", "Burst Time", "Turnaround Time");
-            for (Process p : processes) {
+
+            // Sort processes by processID for display
+            Process[] displayProcesses = processes.clone();
+            Arrays.sort(displayProcesses, (a, b) -> a.processID.compareTo(b.processID));
+
+            for (Process p : displayProcesses) {
                 System.out.printf("%-10s %-15d %-15d %-15d\n",
                         p.processID, p.arrivalTime, p.burstTime, p.turnaroundTime);
             }
